@@ -1,0 +1,73 @@
+{% extends 'layouts/main.html' %}
+{% block title %}Edit Venue{% endblock %}
+{% block content %}
+  <div class="form-wrapper">
+    <form class="form" method="post" id="form_editvenue" action="/venues/{{venue.id}}/edit/submit" data-id="{{ venue.id }}">
+      <h3 class="form-heading">Edit venue <em>{{ venue.name }}</em> <a href="{{ url_for('index') }}" title="Back to homepage"><i class="fa fa-home pull-right"></i></a></h3>
+      <div class="form-group">
+        <label for="name">Name</label>
+        {{ form.name(class_='form-control', id='new_name', value=venue.name, autofocus=true) }}
+      </div>
+      <div class="form-group">
+          <label>City & State</label>
+          <div class="form-inline">
+            <div class="form-group">
+              {{ form.city(class_='form-control', id='new_city',  value=venue.city, autofocus=true) }}
+            </div>
+            <div class="form-group">
+              {{ form.state(class_='form-control', id='new_state', value=venue.state, autofocus=true) }}
+            </div>
+          </div>
+      </div>
+      <!-- <div class="form-group">
+        <label for="address">Address</label>
+        {{ form.address(class_ = 'form-control', id='new_address', value=venue.address, autofocus = true) }}
+      </div>
+      <div class="form-group">
+          <label for="phone">Phone</label>
+          {{ form.phone(class_ = 'form-control', value=venue.phone, autofocus = true) }}
+        </div>
+      <div class="form-group">
+        <label for="genres">Genres</label>
+        <small>Ctrl+Click to select multiple</small>
+        {{ form.genres(class_ = 'form-control', value=venue.genres, id=form_genre, autofocus = true) }}
+      </div>
+      <div class="form-group">
+          <label for="facebook_link">Facebook Link</label>
+          {{ form.facebook_link(class_ = 'form-control', value=venue.facebook_link, id=form_fb, autofocus = true) }}
+      </div> -->
+	  
+      <input type="submit" value="Edit Venue" class="btn btn-primary btn-lg btn-block"  />
+	  
+    </form>
+  </div>
+  
+  
+<script>
+	
+	const edit_venue = document.getElementById('form_editvenue');
+	edit_venue.onsubmit = function(e) {
+		e.preventDefault();
+		const venue_id = edit_venue.dataset.id;
+		fetch('/venues/' + venue_id + '/edit/submit', {
+			method: 'POST',
+			body: JSON.stringify({
+				'new_name': document.getElementById('new_name').value,
+				'new_city': document.getElementById('new_city').value,
+				'new_state': document.getElementById('new_state').value
+			}),
+			headers: {'Content-Type': 'application/json'}
+		})
+		.then(function(response) {
+			console.log('Response:', response);
+			return response.json();
+		})
+		.then(function(jsonResponse) {
+			console.log(jsonResponse);
+			window.location.href = '/venues/' + venue_id ;
+		})
+	}
+		
+</script>
+	
+{% endblock %}
