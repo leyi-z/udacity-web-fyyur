@@ -10,12 +10,15 @@ import sys
 
 from flask import Flask, render_template, request, Response, flash, redirect, url_for, jsonify
 from flask_moment import Moment
-from flask_sqlalchemy import SQLAlchemy
 from logging import Formatter, FileHandler
 from flask_wtf import Form
 from forms import *
 from flask_migrate import Migrate
 from datetime import datetime
+
+#import models
+from models import db
+from models import *
 
 
 
@@ -28,14 +31,6 @@ moment = Moment(app)
 app.config.from_object('config')
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
-
-
-
-#----------------------------------------------------------------------------#
-# Models.
-#----------------------------------------------------------------------------#
-
-from models import *
 
 
 
@@ -470,6 +465,9 @@ if not app.debug:
 
 # Default port:
 if __name__ == '__main__':
+    db.init_app(app)
+        with app.app_context():
+            db.create_all()
     app.run()
 
 # Or specify port manually:
