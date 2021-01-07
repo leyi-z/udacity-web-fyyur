@@ -16,8 +16,6 @@ from forms import *
 from flask_migrate import Migrate
 from datetime import datetime
 
-#import models
-from models import db
 from models import *
 
 
@@ -27,11 +25,14 @@ from models import *
 #----------------------------------------------------------------------------#
 
 app = Flask(__name__)
-moment = Moment(app)
 app.config.from_object('config')
-db = SQLAlchemy(app)
+moment = Moment(app)
 migrate = Migrate(app, db)
 
+with app.app_context():
+    db.init_app(app)
+    db.create_all()
+    db.session.commit()
 
 
 #----------------------------------------------------------------------------#
@@ -465,9 +466,6 @@ if not app.debug:
 
 # Default port:
 if __name__ == '__main__':
-    db.init_app(app)
-        with app.app_context():
-            db.create_all()
     app.run()
 
 # Or specify port manually:

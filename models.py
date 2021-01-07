@@ -40,3 +40,5 @@ class Show(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     artist_id = db.Column(db.Integer, db.ForeignKey('artist.id'))
     venue_id = db.Column(db.Integer, db.ForeignKey('venue.id'))
+    
+#db.create_all()
