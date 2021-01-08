@@ -8,7 +8,7 @@ import babel
 import logging
 import sys
 
-from flask import Flask, render_template, request, Response, flash, redirect, url_for, jsonify
+from flask import Flask, render_template, request, Response, flash, redirect, url_for, jsonify, abort
 from flask_moment import Moment
 from logging import Formatter, FileHandler
 from flask_wtf import Form
@@ -301,12 +301,14 @@ def edit_venue_submission(venue_id):
         new_name = request.get_json()['new_name']
         new_city = request.get_json()['new_city']
         new_state = request.get_json()['new_state']
+        new_address = request.get_json()['new_address']
         new_phone = request.get_json()['new_phone']
         new_fblink = request.get_json()['new_fblink']
         new_venue = Venue(
             name=new_name, 
             city=new_city, 
             state=new_state,
+            address=new_address,
             phone=new_phone,
             facebook_link=new_fblink
         )
@@ -314,6 +316,7 @@ def edit_venue_submission(venue_id):
             Venue.name: new_name,
             Venue.city: new_city,
             Venue.state: new_state,
+            Venue.address: new_address,
             Venue.phone: new_phone,
             Venue.facebook_link: new_fblink 
         })
@@ -322,6 +325,7 @@ def edit_venue_submission(venue_id):
         body['name']=new_venue.name
         body['city']=new_venue.city
         body['state']=new_venue.state
+        body['address']=new_venue.address
         body['phone']=new_venue.phone
         body['facebook_link']=new_venue.facebook_link
     except:

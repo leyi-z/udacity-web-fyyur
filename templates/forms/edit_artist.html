@@ -20,19 +20,19 @@
           </div>
       </div>
 	  
-      <!-- <div class="form-group">
+      <div class="form-group">
           <label for="phone">Phone</label>
-          {{ form.phone(class_ = 'form-control', placeholder='xxx-xxx-xxxx', autofocus = true) }}
+          {{ form.phone(class_ = 'form-control', id='new_phone', value=artist.phone, autofocus = true) }}
         </div>
       <div class="form-group">
         <label for="genres">Genres</label>
         <small>Ctrl+Click to select multiple</small>
-        {{ form.genres(class_ = 'form-control', placeholder='Genres, separated by commas', id=form_genre, autofocus = true) }}
+        {{ form.genres(class_ = 'form-control', id='new_genres', placeholder='Genres, separated by commas', autofocus = true) }}
       </div>
       <div class="form-group">
           <label for="facebook_link">Facebook Link</label>
-          {{ form.facebook_link(class_ = 'form-control', placeholder='http://', id=form_fb, autofocus = true) }}
-      </div> -->
+          {{ form.facebook_link(class_ = 'form-control', id='new_fblink', value=artist.facebook_link, autofocus = true) }}
+      </div>
 		
       <input type="submit" value="Edit Artist" class="btn btn-primary btn-lg btn-block" />
     </form>
@@ -49,7 +49,9 @@
 			body: JSON.stringify({
 				'new_name': document.getElementById('new_name').value,
 				'new_city': document.getElementById('new_city').value,
-				'new_state': document.getElementById('new_state').value
+				'new_state': document.getElementById('new_state').value,
+				'new_phone': document.getElementById('new_phone').value,
+				'new_fblink': document.getElementById('new_fblink').value
 			}),
 			headers: {'Content-Type': 'application/json'}
 		})
