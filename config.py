@@ -7,4 +7,4 @@ DEBUG = False
 
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 
-SQLALCHEMY_DATABASE_URI = 'postgres://leyi_psql@localhost:5432/db_proj1'
+SQLALCHEMY_DATABASE_URI = 'postgres://postgres@localhost:5432/db_proj1'
